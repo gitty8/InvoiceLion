@@ -48,5 +48,6 @@ class InvoiceTemplate
         do {
             $result = preg_replace('/<script[^>]*>(.*?)<\/script>/is', "", $result, -1, $count);
         } while ($count);
+        return $result;
     }
 }
