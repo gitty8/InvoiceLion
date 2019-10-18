@@ -46,7 +46,7 @@ class InvoiceTemplate
         Template::$escape = '';
         $result = Template::render($template, $data, static::functions());
         do {
-            preg_replace('/<script[^>]*>(.*?)<\/script>/is', "", $result, -1, $count);
+            $result = preg_replace('/<script[^>]*>(.*?)<\/script>/is', "", $result, -1, $count);
         } while ($count);
     }
 }
