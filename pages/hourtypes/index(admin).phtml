@@ -9,7 +9,7 @@
   <tbody>
     <?php foreach ($data as $row): ?>
     <tr>
-      <td><span><?php e($row['hourtypes']['name']);?></span></td>
+      <td><a href="/hourtypes/view/<?php e($row['hourtypes']['id']);?>"><?php e($row['hourtypes']['name']);?></a></td>
     </tr>
     <?php endforeach; ?>
   </tbody>
