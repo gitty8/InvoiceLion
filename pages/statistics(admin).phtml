@@ -120,7 +120,7 @@ $graph_height = 100;
 <div class="col50">
 <table>
     <tr>
-        <th class="name" colspan="3">Subscriptions per type</th>
+        <th class="name" colspan="3">Subscriptions per type per month</th>
     </tr>
     <?php foreach ($sumsubscriptionspertype_thisyear as $sumsubscriptiontype): ?>
         <tr>
@@ -131,7 +131,7 @@ $graph_height = 100;
     <?php endforeach; ?>
     <tr>
         <td colspan="2"><span>Total subscriptions</span></td>
-        <td class="money"><span><?php e(number_format($subscriptionIncome)); ?></span></td>
+        <td class="money"><span><?php e(number_format($subscriptionIncome,2)); ?></span></td>
     </tr>
 </table>
 </div>
@@ -141,7 +141,7 @@ $graph_height = 100;
 <div class="col50">
 <table>
     <tr>
-        <th class="name" colspan="3">Subscriptions per referral</th>
+        <th class="name" colspan="3">Subscriptions per referral per year</th>
     </tr>
     <?php foreach ($sumreferralspercustomer_currently as $sumreferrals): ?>
         <tr>
@@ -149,6 +149,10 @@ $graph_height = 100;
             <td class="money"><span><?php e(number_format($sumreferrals['']['sumreferrals'],2)); ?></span></td>
         </tr>
     <?php endforeach; ?>
+    <tr>
+        <td><span>Total subscriptions</span></td>
+        <td class="money"><span><?php e(number_format($subscriptionIncome*12,2)); ?></span></td>
+    </tr>
 </table>
 </div>
 <?php } ?>
