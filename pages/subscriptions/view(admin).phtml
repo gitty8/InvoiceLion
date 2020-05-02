@@ -50,6 +50,15 @@
   	<dd><?php e($data['subscriptions']['canceled']);?></dd>
   </dl><?php } ?>
 	
+  <dl>
+		<dt>Referred by</dt>
+  	<dd>
+		  <?php if(isset($data['subscriptions']['referral_customer_id'])) {?>
+				<a href="/customers/view/<?php e($data['subscriptions']['referral_customer_id']); ?>"><?php e($customers[$data['subscriptions']['referral_customer_id']]); ?></a>
+			<?php } else e('-'); ?>
+		</dd>
+  </dl>
+
 	<?php if($data['subscriptions']['comment']) {?><dl>
 		<dt>Comment</dt>
  		<dd><?php e($data['subscriptions']['comment']);?></dd>

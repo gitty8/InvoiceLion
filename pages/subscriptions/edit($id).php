@@ -1,7 +1,7 @@
 <?php
 $subscriptiontypes = DB::selectPairs('select `id`,`name` from `subscriptiontypes` WHERE `tenant_id` = ?', $_SESSION['user']['tenant_id']);
 $projects = DB::select('select `id`,`name`,`customer_id` from `projects` WHERE `tenant_id` = ? and `active` ORDER BY name', $_SESSION['user']['tenant_id']);
-$customers = DB::selectPairs('select `id`,`name` from `customers`  WHERE `tenant_id` = ?', $_SESSION['user']['tenant_id']);
+$customers = DB::selectPairs('select `id`,`name` from `customers`  WHERE `tenant_id` = ? ORDER BY `name`', $_SESSION['user']['tenant_id']);
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = $_POST;
 
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 	
     if (!isset($errors)) {
         try {
-            $rowsAffected = DB::update('UPDATE `subscriptions` SET `fee`=?, `tax_percentage`=?, `months`=?, `name`=?, `from`=?, `canceled`=?, `comment`=?, `subscriptiontype_id`=?, `customer_id`=?, `project_id`=? WHERE `tenant_id` = ? AND `id` = ?', $data['subscriptions']['fee'], $data['subscriptions']['tax_percentage'], $data['subscriptions']['months'], $data['subscriptions']['name'], $data['subscriptions']['from'], $data['subscriptions']['canceled'], $data['subscriptions']['comment'], $data['subscriptions']['subscriptiontype_id'], $data['subscriptions']['customer_id'], $data['subscriptions']['project_id'], $_SESSION['user']['tenant_id'], $id);
+            $rowsAffected = DB::update('UPDATE `subscriptions` SET `fee`=?, `tax_percentage`=?, `months`=?, `name`=?, `from`=?, `canceled`=?, `comment`=?, `subscriptiontype_id`=?, `customer_id`=?, `referral_customer_id`=?, `project_id`=? WHERE `tenant_id` = ? AND `id` = ?', $data['subscriptions']['fee'], $data['subscriptions']['tax_percentage'], $data['subscriptions']['months'], $data['subscriptions']['name'], $data['subscriptions']['from'], $data['subscriptions']['canceled'], $data['subscriptions']['comment'], $data['subscriptions']['subscriptiontype_id'], $data['subscriptions']['customer_id'], $data['subscriptions']['referral_customer_id'], $data['subscriptions']['project_id'], $_SESSION['user']['tenant_id'], $id);
             if ($rowsAffected !== false) {
                 Flash::set('success', 'Subscription saved');
                 Router::redirect('subscriptions/view/' . $id);
