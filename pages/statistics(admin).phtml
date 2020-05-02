@@ -120,13 +120,33 @@ $graph_height = 100;
 <div class="col50">
 <table>
     <tr>
-        <th class="name" colspan="3">Subscriptions per type (<?php e($currency['currencies']['character']); ?> <?php e(round($subscriptionIncome)); ?>)</th>
+        <th class="name" colspan="3">Subscriptions per type</th>
     </tr>
     <?php foreach ($sumsubscriptionspertype_thisyear as $sumsubscriptiontype): ?>
         <tr>
             <td class="precentage"><span><?php e($sumsubscriptiontype['subscriptiontypes']['times']); ?>x</span></td>    
             <td><span><a href="subscriptiontypes/view/<?php e($sumsubscriptiontype['subscriptiontypes']['id']); ?>"><?php e($sumsubscriptiontype['subscriptiontypes']['name']); ?></a></span></td>
             <td class="money"><span><?php e(number_format($sumsubscriptiontype['subscriptiontypes']['sum'],2)); ?></span></td>
+        </tr>
+    <?php endforeach; ?>
+    <tr>
+        <td colspan="2"><span>Total subscriptions</span></td>
+        <td class="money"><span><?php e(number_format($subscriptionIncome)); ?></span></td>
+    </tr>
+</table>
+</div>
+<?php } ?>
+
+<?php if($sumreferralspercustomer_currently) { ?>
+<div class="col50">
+<table>
+    <tr>
+        <th class="name" colspan="3">Subscriptions per referral</th>
+    </tr>
+    <?php foreach ($sumreferralspercustomer_currently as $sumreferrals): ?>
+        <tr>
+            <td><span><a href="customers/view/<?php e($sumreferrals['customers']['id']); ?>"><?php e($sumreferrals['customers']['name']); ?></a></span></td>
+            <td class="money"><span><?php e(number_format($sumreferrals['']['sumreferrals'],2)); ?></span></td>
         </tr>
     <?php endforeach; ?>
 </table>
