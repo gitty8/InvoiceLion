@@ -137,13 +137,13 @@ $graph_height = 100;
 </div>
 <?php } ?>
 
-<?php if($sumreferralspercustomer_currently) { ?>
+<?php if($sumreferralspercustomer_thisyear) { ?>
 <div class="col50">
 <table>
     <tr>
         <th class="name" colspan="3">Subscriptions per referral / year</th>
     </tr>
-    <?php foreach ($sumreferralspercustomer_currently as $sumreferrals): ?>
+    <?php foreach ($sumreferralspercustomer_thisyear as $sumreferrals): ?>
         <tr>
             <td><span><a href="customers/view/<?php e($sumreferrals['customers']['id']); ?>"><?php e($sumreferrals['customers']['name']); ?></a></span></td>
             <td class="money"><span><?php e(number_format($sumreferrals['']['sumreferrals'],2)); ?></span></td>
