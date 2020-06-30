@@ -16,6 +16,8 @@ $sumhourspertype_thisyear = DB::selectPairs('SELECT `hourtypes`.name,SUM(hours_w
 arsort($sumhourspertype_thisyear);
 $totalhours_thisyear = array_sum($sumhourspertype_thisyear);
 
+//$sumreferralspercustomer_currently = DB::select('SELECT customers.id, customers.name, sum(fee*(12/months)) as sumreferrals from customers, subscriptions where subscriptions.`tenant_id` = ? and customers.`tenant_id` = ? and subscriptions.referral_customer_id = customers.id and (canceled > now() or canceled is null) GROUP BY subscriptions.referral_customer_id', $_SESSION['user']['tenant_id'], $_SESSION['user']['tenant_id']);
+$sumreferralspercustomer_thisyear = DB::select('SELECT customers.id, customers.name, sum(fee*(12/months)) as sumreferrals from customers, subscriptions where subscriptions.`tenant_id` = ? and customers.`tenant_id` = ? and subscriptions.referral_customer_id = customers.id and (canceled > ? or canceled is null) AND subscriptions.from <= ? GROUP BY subscriptions.referral_customer_id', $_SESSION['user']['tenant_id'], $_SESSION['user']['tenant_id'],$year.'-12-31',$year.'-12-31');
 
 $sumsubscriptionspertype_thisyear = DB::select('SELECT `subscriptiontypes`.id, `subscriptiontypes`.name, count(subscriptions.id) as `subscriptiontypes.times`, SUM(fee/subscriptions.months) as `subscriptiontypes.sum` FROM `subscriptions` LEFT JOIN `subscriptiontypes` ON `subscriptions`.`subscriptiontype_id` = `subscriptiontypes`.id WHERE `subscriptions`.`tenant_id` = ? AND (subscriptions.canceled IS NULL OR subscriptions.canceled > ?) AND subscriptions.from <= ? GROUP BY `subscriptiontype_id`', $_SESSION['user']['tenant_id'],$year.'-12-31',$year.'-12-31');
 

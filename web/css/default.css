@@ -267,6 +267,7 @@ td > span {
 }
 tr:last-child {border-bottom: 0;}
 thead tr:last-child {border-bottom: 1px solid rgba(0,0,0,0.05);}
+tr.sum td span {color: #aaa;}
 
 @media (max-width: 800px) {
     table.responsive {position: relative;}
