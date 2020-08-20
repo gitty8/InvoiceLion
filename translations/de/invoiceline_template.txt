@@ -1,0 +1,9 @@
+{{if:type|eq(hours)}}
+    {{hours.hours_worked}} Stunden (€ {{hours.hourly_fee}} / hour) - {{hours.name}}
+{{endif}}
+{{if:type|eq(delivery)}}
+    {{delivery.name}}
+{{endif}}
+{{if:type|eq(subscription)}}
+    {{subscription.name}} vom {{subscriptionperiod.from|formatDate("F j, Y")|translateMonth(en)}} bis {{subscriptionperiod.until|formatDate("F j, Y")|translateMonth(en)}}
+{{endif}}
