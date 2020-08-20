@@ -1,0 +1,128 @@
+<table id="address"><tr><td>
+    <br>
+    <br>
+    <br>
+    {{customer.name}}<br>
+    att. {{customer.contact}}<br>
+    {{customer.address|convertLines}}<br>
+    <br>
+    <br>
+    <br>
+</td><td>
+    <img id="logo" src="data:image/png;base64,{{company.logo_image|encodeBase64}}" /><br>
+    {{company.address|convertLines}}<br>
+    Tel: {{company.phone}}<br>
+    IBAN: {{company.bank_account_number}}<br>
+    att. {{company.bank_account_name}}<br>
+    BIC: {{company.bank_bic}}<br>
+    CoC: {{company.coc_number}}<br>
+    USt-IdNr: {{company.tax_number}}<br>                
+</td></tr></table>
+<br>
+<br>
+<br>
+{{if:invoice.reminder|eq(0)}}
+    <b>Datum:</b> {{invoice.date|formatDate("F j, Y")|translateMonth(en)}}<br>
+    <b>Rechnungsnummer:</b> {{invoice.number}}<br>
+    <br />{{invoice.name}}<br>
+{{endif}}
+{{if:invoice.reminder|eq(1)}}
+    <b>Datum:</b> {{now|formatDate("F j, Y")|translateMonth(en)}}<br>
+    <br>
+    <table id="warning"><tr><td><b>ERINNERUNG</b></td></tr></table>
+    <br>
+    <b>Rechnungsdatum:</b> {{invoice.date|formatDate("F j, Y")|translateMonth(en)}}<br>
+    <b>Rechnungsnummer:</b> {{invoice.number}}<br>
+    <br />{{invoice.name}}<br>
+{{endif}}
+{{if:invoice.reminder|eq(2)}}
+    <b>Datum:</b> {{now|formatDate("F j, Y")|translateMonth(en)}}<br>
+    <br>
+    <table id="warning"><tr><td><b>ZWEITE UND LETZTE ERINNERUNG</b></td></tr></table>
+    <br>
+    <b>Rechnungsdatum:</b> {{invoice.date|formatDate("F j, Y")|translateMonth(en)}}<br>
+    <b>Rechnungsnummer:</b> {{invoice.number}}<br>
+    <br />{{invoice.name}}<br>
+{{endif}}
+<br>
+<br>
+<br>
+<b>Invoiced items:</b><br>
+<table id="lines">
+{{for:line:lines}}
+    <tr><td>
+        {{line.name|capitalize}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </td><td>
+        {{line.tax_percentage}}% USt-IdNr&nbsp;&nbsp;&nbsp;€ 
+    </td><td>
+        {{line.subtotal|formatNumber(2,44,0)}}
+    </td></tr>
+{{endfor}}
+{{if:invoice.multiLine}}
+    <tr><td>
+        &nbsp;
+    </td><td>
+        Zwischensumme&nbsp;&nbsp;&nbsp;€ 
+    </td><td class="sum">
+        {{invoice.subtotal|formatNumber(2,44,0)}}
+    </td></tr>
+{{endif}}
+{{if:customer.tax_reverse_charge}}
+    <tr><td>
+        &nbsp;
+    </td><td>
+        &nbsp;
+    </td><td>
+        Mehrwertsteuer-Umkehrung
+    </td></tr>
+{{endif}}
+{{if:customer.tax_reverse_charge|eq(0)}}
+    <tr><td>
+        &nbsp;
+    </td><td>
+        &nbsp;&nbsp;&nbsp;€ 
+    </td><td>
+        {{invoice.tax|formatNumber(2,44,0)}}
+    </td></tr>
+{{endif}}
+<tr><td>
+    &nbsp;
+</td><td>
+    Gesamtsumme&nbsp;&nbsp;&nbsp;€ 
+</td><td class="sum">
+    {{invoice.total|formatNumber(2,44,0)}}
+</td><tr>
+</table>
+<br>
+<br>
+<br>
+{{if:invoice.reminder|eq(0)}}
+     Wir bitten Sie freundlichst, den obigen Betrag innerhalb von  {{company.payment_period}}  Tagen zu überweisen an 
+    IBAN {{company.bank_account_number}} ({{company.bank_name}}) <b>att. {{company.bank_account_name}}</b> 
+    in {{company.bank_city}}. Bitte geben Sie die Rechnungsnummer an.<br>
+{{endif}}
+{{if:invoice.reminder|eq(1)}}
+    Wir schreiben Ihnen, um Sie darüber zu informieren, dass wir die Zahlung der oben genannten Rechnung noch nicht erhalten haben.
+    Die Zahlungsfrist für diese Rechnung beträgt  {{company.payment_period}} Tage. Diese Frist ist abgelaufen.<br>
+    <br>
+     Deshalb bitten wir Sie, diese ausstehende Rechnung vollständig zu überweisen, spätestens bis <b>{{company.reminder_period|relativeDate|formatDate("F j, Y")|translateMonth(en)}}</b>, 
+     unter IBAN {{company.bank_account_number}} ({{company.bank_name}}) <b>att. {{company.bank_account_name}}</b> in {{company.bank_city}}. Bitte geben Sie die Rechnungsnummer an.<br>
+{{endif}}
+{{if:invoice.reminder|eq(2)}}
+    Wir schreiben Ihnen, um Sie darüber zu informieren, dass wir die Zahlung der oben genannten Rechnung noch nicht erhalten haben.
+    Die Zahlungsfrist für diese Rechnung beträgt  {{company.payment_period}} Tage. Diese Frist ist abgelaufen.<br>
+    <br>
+    Deshalb bitten wir Sie, diese ausstehende Rechnung vollständig zu überweisen, spätestens bis  <b>{{company.reminder_period|relativeDate|formatDate("F j, Y")|translateMonth(en)}}</b>, 
+    unter IBAN {{company.bank_account_number}} ({{company.bank_name}}) <b>att. {{company.bank_account_name}}</b> in {{company.bank_city}}. Bitte geben Sie die Rechnungsnummer an.<br>
+    <br>
+      Sollten Sie die Rechnung seit dem Verfassen dieser Mail beglichen haben, ignorieren Sie bitte unsere Mahnung.<br>
+{{endif}}
+<br>
+<br>
+<br>
+<br>
+<br>
+Kind regards,<br>
+<img id="signature" src="data:image/png;base64,{{company.signature_image|encodeBase64}}" /><br>
+{{company.contact}}<br>
+<table id="footer"><tr><td>Rechnungsnummer: {{invoice.number}}</td></tr></table>
