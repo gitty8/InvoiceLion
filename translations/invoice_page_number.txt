@@ -1,1 +1,0 @@
-473,785,Seite {PAGE_NUM} von {PAGE_COUNT}
